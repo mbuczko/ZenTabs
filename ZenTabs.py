@@ -203,14 +203,8 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
                 if len(name) == 0:
                     name = "untitled"
             else:
-                name = os.path.basename(view.file_name())
-
-            if is_current:
-                name += "\t^"  # current
-            if view.file_name() is None or view.is_dirty():
-                name += "\t*"  # unsaved
-            if view.is_read_only():
-                name += "\t#"  # read only
+                last = os.path.split(os.path.dirname(view.file_name()))[1]
+                name = os.path.basename(view.file_name()+" - "+last)
 
             self.add_element(is_current, self.view_list, view)
             if g_showFullPath and not is_draft:
